@@ -12,9 +12,9 @@ export function PasswordStrengthMeter() {
         id="password-input"
         type="password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(event) => setPassword(event.target.value)}
       />
-      <p data-testid="strength-indicator">{strength}</p>
+      <p>Fortaleza: <span>{strength}</span></p>
     </div>
   )
 }
