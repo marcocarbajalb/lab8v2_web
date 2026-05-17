@@ -70,4 +70,56 @@ describe('PasswordStrengthMeter', () => {
       expect(screen.getByText('vacía')).toBeInTheDocument()
     })
   })
+
+  describe('barra de progreso', () => {
+    it('renderiza una barra de progreso accesible con valor inicial 0', () => {
+      render(<PasswordStrengthMeter />)
+      const progressbar = screen.getByRole('progressbar')
+      expect(progressbar).toBeInTheDocument()
+      expect(progressbar).toHaveAttribute('aria-valuenow', '0')
+      expect(progressbar).toHaveAttribute('aria-valuemin', '0')
+      expect(progressbar).toHaveAttribute('aria-valuemax', '4')
+    })
+
+    it('avanza la barra a 1 cuando la contraseña es débil', async () => {
+      const user = userEvent.setup()
+      render(<PasswordStrengthMeter />)
+      const input = screen.getByLabelText(/contraseña/i)
+
+      await user.type(input, 'abc')
+
+      expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '1')
+    })
+
+    it('avanza la barra a 2 cuando la contraseña es media', async () => {
+      const user = userEvent.setup()
+      render(<PasswordStrengthMeter />)
+      const input = screen.getByLabelText(/contraseña/i)
+
+      await user.type(input, 'abcdefgh')
+
+      expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '2')
+    })
+
+    it('avanza la barra a 3 cuando la contraseña es fuerte', async () => {
+      const user = userEvent.setup()
+      render(<PasswordStrengthMeter />)
+      const input = screen.getByLabelText(/contraseña/i)
+
+      await user.type(input, 'password1')
+
+      expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '3')
+    })
+
+    it('avanza la barra a 4 cuando la contraseña es muy fuerte', async () => {
+      const user = userEvent.setup()
+      render(<PasswordStrengthMeter />)
+      const input = screen.getByLabelText(/contraseña/i)
+
+      await user.type(input, 'password1!')
+
+      expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '4')
+    })
+  })
+
 })
