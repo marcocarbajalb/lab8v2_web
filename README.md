@@ -43,6 +43,7 @@ Este proyecto usa **Vitest**, no el test runner nativo de Bun. Por eso los tests
 
 ## Estructura del proyecto
 
+```
 src/
 ├── components/
 │   ├── PasswordStrengthMeter.tsx       # Componente principal
@@ -56,6 +57,7 @@ src/
 ├── App.tsx                             # Entry point del componente
 ├── index.css                           # Estilos globales (dark theme)
 └── main.tsx                            # Bootstrap de React
+```
 
 La separación entre lógica pura (`calculateStrength`) y componente (`PasswordStrengthMeter`) es intencional: la función de cálculo no depende de React y puede testearse de forma aislada. El componente la importa y solo se encarga del manejo de estado del input y la renderización.
 
